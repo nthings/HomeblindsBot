@@ -44,7 +44,8 @@ app.post('/webhook/', function (req, res) {
 			}
 
 			console.log(text);
-			if(getAlto && alto == 0 && text.substring(0, 10) !="Necesitamos"){
+			console.log(text.substring(0, 10));
+			if(getAlto && alto == 0 && text.substring(0, 10) != "Necesitamos"){
 				console.log("IM IN ALTO");
 				alto = medidaToCm(text);
 				getAlto = false;
