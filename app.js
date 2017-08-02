@@ -101,7 +101,7 @@ function sendPersianas(sender) {
 				}, {
 					"title": "Sheer",
 					"subtitle": "Element #1 of an hscroll",
-					"image_url": "https://s-media-cache-ak0.pinimg.com/originals/5f/56/f2/5f56f20e628c2fbf65fe54ee06212028.jpg",
+					"image_url": "http://www.servipersianas.com.mx/sheerelegance04.jpg",
 					"buttons": [{
 						"type": "web_url",
 						"url": "https://www.messenger.com",
@@ -110,6 +110,19 @@ function sendPersianas(sender) {
 						"type": "postback",
 						"title": "Cotizar",
 						"payload": "sheer",
+					}],
+				},{
+					"title": "Vertical",
+					"subtitle": "Element #1 of an hscroll",
+					"image_url": "http://espacioflex.com/wp-content/uploads/2015/09/04-persiana-vertical.jpg",
+					"buttons": [{
+						"type": "web_url",
+						"url": "https://www.messenger.com",
+						"title": "Ver Mas"
+					}, {
+						"type": "postback",
+						"title": "Cotizar",
+						"payload": "vertical",
 					}],
 				}]
 			}
