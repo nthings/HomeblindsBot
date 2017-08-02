@@ -28,6 +28,7 @@ app.get('/webhook/', function (req, res) {
 })
 
 // to post data
+let getAlto = false, getAncho = false, alto = 0, ancho = 0, persiana = "", precio=100;
 app.post('/webhook/', function (req, res) {
 	let messaging_events = req.body.entry[0].messaging;
 	for (let i = 0; i < messaging_events.length; i++) {
@@ -41,15 +42,31 @@ app.post('/webhook/', function (req, res) {
 				sendPersianas(sender);
 				continue;
 			}
+
+			if(getAlto){
+				alto = medidaToCm(text);
+				getAlto = false;				
+			}
+			if(getAncho){
+				ancho = medidaToCm(text);
+				getAncho = false;
+			}
+			if(alto != 0 && ancho != 0){
+				sendTextMessage(sender, "Precio del metro cuadrado de la persiana " + persiana + ": $" + precio + 
+					" . Segun las medidas que nos diste (" + alto + " cm. X " + ancho + " cm) Tu persiana costaria: $"+(precio*(alto*ancho)));
+			}
 			//sendTextMessage(sender, "Text received, echo: "+text.substring(0, 200));
 		}
 		if (event.postback) {
 			// let text = JSON.stringify(event.postback);
 			if(event.postback.title === "COTIZAR"){
-				sendMedidasMessage(sender, event.postback.payload)
+				persiana = event.postback.payload;
+				sendMedidasMessage(sender);
 			}else if(event.postback.payload === "ALTO"){
+				getAlto = true;
 				sendTextMessage(sender, "Excelente!, ahora ingresa el alto ↕️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
 			}else if(event.postback.payload === "ANCHO"){
+				getAncho = true;
 				sendTextMessage(sender, "Excelente!, ahora ingresa el ancho ↔️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
 			}
 			// sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token);
@@ -163,7 +180,7 @@ function sendPersianas(sender) {
 	});
 };
 
-function sendMedidasMessage(sender, persiana) {
+function sendMedidasMessage(sender) {
 	//El cliente ya eligio la persiana que desea y hay que pedir las medidas para darle una cotizacion
 	let messageData = {
 		"attachment": {
@@ -201,6 +218,17 @@ function sendMedidasMessage(sender, persiana) {
 			console.log('Error: ', response.body.error);
 		}
 	});
+}
+
+function medidaToCm(text) {
+	medida = text.match(/^[0-9]{1,}([,.][0-9]{1,})?\w/g)
+	// Si la medida dada son metros convertir a centimentros
+	if(!/[a-zA-Z]*c[a-zA-Z]*\w/g.test(text)){
+		// Convertir los metros a centimetros
+		medida = medida * 100;
+	}
+
+	return medida;
 }
 
 // spin spin sugar
