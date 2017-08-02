@@ -99,9 +99,7 @@ function sendPersianas(sender) {
 					"buttons": [{
 						"title": "Cotizar",
 						"type": "postback",
-						"payload": "enrollable",
-						"messenger_extensions": true,
-						"webview_height_ratio": "tall"
+						"payload": "enrollable"
 					}],
 				}, {
 					"title": "Sheer",
@@ -116,9 +114,7 @@ function sendPersianas(sender) {
 					"buttons": [{
 						"type": "postback",
 						"title": "Cotizar",
-						"payload": "sheer",
-						"messenger_extensions": true,
-						"webview_height_ratio": "tall"
+						"payload": "sheer"
 					}],
 				},{
 					"title": "Vertical",
@@ -133,9 +129,7 @@ function sendPersianas(sender) {
 					"buttons": [{
 						"type": "postback",
 						"title": "Cotizar",
-						"payload": "sheer",
-						"messenger_extensions": true,
-						"webview_height_ratio": "tall"
+						"payload": "sheer"
 					}],
 				}]
 			}
