@@ -111,19 +111,6 @@ function sendPersianas(sender) {
 						"title": "Cotizar",
 						"payload": "sheer",
 					}],
-				},{
-					"title": "Vertical",
-					"subtitle": "Element #1 of an hscroll",
-					"image_url": "http://espacioflex.com/wp-content/uploads/2015/09/04-persiana-vertical.jpg",
-					"buttons": [{
-						"type": "web_url",
-						"url": "https://www.messenger.com",
-						"title": "Ver Mas"
-					}, {
-						"type": "postback",
-						"title": "Cotizar",
-						"payload": "vertical",
-					}],
 				}]
 			}
 		}
