@@ -43,14 +43,7 @@ app.post('/webhook/', function (req, res) {
 				continue;
 			}
 
-			console.log(getAlto)
-			console.log(alto)
-			console.log(getAncho)
-			console.log(ancho)
-			console.log(text.match(/[↔️]+/))
-			console.log(text.match(/[↕️]+/))
-
-			if(getAlto && alto == 0 && !(text.match(/[↔️]+/)[0]=="↔️" || text.match(/[↕️]+/)[0]=="↕️")){
+			if(getAlto && alto == 0){
 				alto = medidaToCm(text);
 				getAlto = false;
 
@@ -58,15 +51,9 @@ app.post('/webhook/', function (req, res) {
 				sendTextMessage(sender, "Excelente!, ahora ingresa el ancho ↔️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");			
 			}
 
-			if(getAncho && ancho == 0 && !(text.match(/[↔️]+/)[0]=="↔️" || text.match(/[↕️]+/)[0]=="↕️")){
+			if(getAncho && ancho == 0){
 				ancho = medidaToCm(text);
 				getAncho = false;
-
-				getAlto = true;
-				sendTextMessage(sender, "Excelente!, ahora ingresa el alto ↕️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
-			}
-
-			if(alto != 0 && ancho != 0 && alto != null && ancho != null){
 				sendTextMessage(sender, "Precio del metro cuadrado de la persiana " + persiana + ": $" + precio + 
 					" . Segun las medidas que nos diste (" + alto + " cm. X " + ancho + " cm) Tu persiana costaria: $"+(precio*(alto*ancho)));
 			}
@@ -76,13 +63,9 @@ app.post('/webhook/', function (req, res) {
 			// let text = JSON.stringify(event.postback);
 			if(event.postback.title === "COTIZAR"){
 				persiana = event.postback.payload;
-				sendMedidasMessage(sender);
-			}else if(event.postback.payload === "ALTO"){
+				sendTextMessage(sender, "Necesitamos las medidas de tu ventana 📐.");
+				sendTextMessage(sender, "Ingresa el alto ↕️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
 				getAlto = true;
-				sendTextMessage(sender, "Excelente!, ahora ingresa el alto ↕️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
-			}else if(event.postback.payload === "ANCHO"){
-				getAncho = true;
-				sendTextMessage(sender, "Excelente!, ahora ingresa el ancho ↔️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
 			}
 			// sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token);
 			continue;
@@ -194,46 +177,6 @@ function sendPersianas(sender) {
 		}
 	});
 };
-
-function sendMedidasMessage(sender) {
-	//El cliente ya eligio la persiana que desea y hay que pedir las medidas para darle una cotizacion
-	let messageData = {
-		"attachment": {
-			"type":"template",
-			"payload":{
-				"template_type": "button",
-				"text": "Necesitamos las medidas de tu ventana 📐. Elige cual nos quieres dar primero 😀",
-				"buttons":[
-					{
-						"title": "ALTO ↕️",
-						"type": "postback",
-						"payload": "ALTO"
-					},
-					{
-						"title": "ANCHO ↔️",
-						"type": "postback",
-						"payload": "ANCHO"
-					},
-				]
-			}
-		}
-	};
-	request({
-		url: 'https://graph.facebook.com/v2.6/me/messages',
-		qs: {access_token:token},
-		method: 'POST',
-		json: {
-			recipient: {id:sender},
-			message: messageData,
-		}
-	}, function(error, response, body) {
-		if (error) {
-			console.log('Error sending messages: ', error);
-		} else if (response.body.error) {
-			console.log('Error: ', response.body.error);
-		}
-	});
-}
 
 function medidaToCm(text) {
 	var medida = text.match(/^[0-9]{1,}([,.][0-9]{1,})?\w/);
