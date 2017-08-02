@@ -95,7 +95,8 @@ function sendPersianas(sender) {
 						"type": "web_url",
 						"url": "https://www.google.com",
 						"webview_height_ratio": "tall",
-						"fallback_url":"https://www.google.com"
+						"fallback_url":"https://www.google.com",
+						"messenger_extensions": true
 					},
 					"buttons": [{
 						"title": "Cotizar",
@@ -110,7 +111,8 @@ function sendPersianas(sender) {
 						"type": "web_url",
 						"url": "https://www.google.com",
 						"webview_height_ratio": "tall",
-						"fallback_url":"https://www.google.com"
+						"fallback_url":"https://www.google.com",
+						"messenger_extensions": true
 					},
 					"buttons": [{
 						"type": "postback",
@@ -125,7 +127,8 @@ function sendPersianas(sender) {
 						"type": "web_url",
 						"url": "https://www.google.com",
 						"webview_height_ratio": "tall",
-						"fallback_url":"https://www.google.com"
+						"fallback_url":"https://www.google.com",
+						"messenger_extensions": true
 					},
 					"buttons": [{
 						"type": "postback",
