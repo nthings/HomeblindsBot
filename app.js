@@ -44,12 +44,12 @@ app.post('/webhook/', function (req, res) {
 			}
 
 			console.log(text);
-			if(getAncho && ancho == 0 && !isNan(text)){
+			if(getAncho && ancho == 0 && !isNaN(text)){
 				console.log("IM IN ANCHO");
 				ancho = text.match(/(?:\d*\.)?\d+/);
 				getAncho = false;
 				sendTextMessage(sender, "Precio del metro cuadrado de la persiana " + persiana + ": $" + precio + 
-					" . Segun las medidas que nos diste (" + alto + " cm. X " + ancho + " cm) Tu persiana costaria: $"+(precio*(alto*ancho)));
+					" . Segun las medidas que nos diste (" + alto + " mts. X " + ancho + " mts.) Tu persiana costaria: $"+(precio*(alto*ancho)));
 				continue;
 			}
 
