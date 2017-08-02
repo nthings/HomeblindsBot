@@ -36,6 +36,7 @@ app.post('/webhook/', function (req, res) {
 		if (event.message && event.message.text) {
 			let text = event.message.text;
 			if (text.toUpperCase().match(/(COT)|(PRE)+/g)){ 
+				console.log("MATCH");
 				sendPersianas(sender);
 				continue;
 			}
