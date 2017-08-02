@@ -95,7 +95,7 @@ function sendPersianas(sender) {
 						"url": "https://www.messenger.com",
 						"webview_height_ratio": "tall",
 						"fallback_url":"https://www.messenger.com"
-					};
+					},
 					"buttons": [{
 						"type": "postback",
 						"title": "Cotizar",
@@ -110,7 +110,7 @@ function sendPersianas(sender) {
 						"url": "https://www.messenger.com",
 						"webview_height_ratio": "tall",
 						"fallback_url":"https://www.messenger.com"
-					};
+					},
 					"buttons": [{
 						"type": "postback",
 						"title": "Cotizar",
@@ -125,7 +125,7 @@ function sendPersianas(sender) {
 						"url": "https://www.messenger.com",
 						"webview_height_ratio": "tall",
 						"fallback_url":"https://www.messenger.com"
-					};
+					},
 					"buttons": [{
 						"type": "postback",
 						"title": "Cotizar",
