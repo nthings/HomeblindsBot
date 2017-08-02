@@ -43,6 +43,13 @@ app.post('/webhook/', function (req, res) {
 				continue;
 			}
 
+			console.log(getAlto)
+			console.log(alto)
+			console.log(getAncho)
+			console.log(ancho)
+			console.log(text.match(/[↔️]+/))
+			console.log(text.match(/[↕️]+/))
+
 			if(getAlto && alto == 0 && !(text.match(/[↔️]+/) || text.match(/[↕️]+/))){
 				alto = medidaToCm(text);
 				getAlto = false;
