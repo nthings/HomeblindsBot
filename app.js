@@ -43,7 +43,7 @@ app.post('/webhook/', function (req, res) {
 				continue;
 			}
 
-			if(getAlto && alto == 0 && typeof(messaging_events) != 'undefined'){
+			if(getAlto && alto == 0 && !(text.contains("↔️") || text.contains("↕️"))){
 				alto = medidaToCm(text);
 				getAlto = false;
 
@@ -51,7 +51,7 @@ app.post('/webhook/', function (req, res) {
 				sendTextMessage(sender, "Excelente!, ahora ingresa el ancho ↔️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");			
 			}
 
-			if(getAncho && ancho == 0 && typeof(messaging_events) != 'undefined'){
+			if(getAncho && ancho == 0 && !(text.contains("↔️") || text.contains("↕️"))){
 				ancho = medidaToCm(text);
 				getAncho = false;
 
@@ -59,7 +59,7 @@ app.post('/webhook/', function (req, res) {
 				sendTextMessage(sender, "Excelente!, ahora ingresa el alto ↕️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
 			}
 
-			if(alto != 0 && ancho != 0 && typeof(messaging_events) != 'undefined'){
+			if(alto != 0 && ancho != 0 && alto != null && ancho != null){
 				sendTextMessage(sender, "Precio del metro cuadrado de la persiana " + persiana + ": $" + precio + 
 					" . Segun las medidas que nos diste (" + alto + " cm. X " + ancho + " cm) Tu persiana costaria: $"+(precio*(alto*ancho)));
 			}
