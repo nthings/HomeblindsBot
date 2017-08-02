@@ -28,7 +28,7 @@ app.get('/webhook/', function (req, res) {
 })
 
 // to post data
-let getAlto = false, getAncho = false, alto = 0, ancho = 0, persiana = "", precio=100;
+var getAlto = false, getAncho = false, alto = 0, ancho = 0, persiana = "", precio=100;
 app.post('/webhook/', function (req, res) {
 	let messaging_events = req.body.entry[0].messaging;
 	for (let i = 0; i < messaging_events.length; i++) {
@@ -43,14 +43,22 @@ app.post('/webhook/', function (req, res) {
 				continue;
 			}
 
-			if(getAlto){
+			if(getAlto && alto == 0){
 				alto = medidaToCm(text);
-				getAlto = false;				
+				getAlto = false;
+
+				getAncho = true;
+				sendTextMessage(sender, "Excelente!, ahora ingresa el ancho ↔️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");			
 			}
-			if(getAncho){
+
+			if(getAncho && ancho == 0){
 				ancho = medidaToCm(text);
 				getAncho = false;
+
+				getAlto = true;
+				sendTextMessage(sender, "Excelente!, ahora ingresa el alto ↕️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
 			}
+
 			if(alto != 0 && ancho != 0){
 				sendTextMessage(sender, "Precio del metro cuadrado de la persiana " + persiana + ": $" + precio + 
 					" . Segun las medidas que nos diste (" + alto + " cm. X " + ancho + " cm) Tu persiana costaria: $"+(precio*(alto*ancho)));
@@ -221,11 +229,13 @@ function sendMedidasMessage(sender) {
 }
 
 function medidaToCm(text) {
-	var medida = text.match(/^[0-9]{1,}([,.][0-9]{1,})?\w/g)
+	var medida = text.match(/^[0-9]{1,}([,.][0-9]{1,})?\w/g);
+	console.log("MEDIDA " + medida)
 	// Si la medida dada son metros convertir a centimentros
 	if(!/[a-zA-Z]*c[a-zA-Z]*\w/g.test(text)){
 		// Convertir los metros a centimetros
 		medida = medida * 100;
+		console.log("MEDIDA CONVERTIDA" + medida)
 	}
 
 	return medida;
