@@ -43,6 +43,7 @@ app.post('/webhook/', function (req, res) {
 				continue;
 			}
 
+			console.log(text);
 			if(getAlto && alto == 0){
 				alto = medidaToCm(text);
 				getAlto = false;
