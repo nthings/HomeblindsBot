@@ -44,22 +44,26 @@ app.post('/webhook/', function (req, res) {
 			}
 
 			console.log(text);
+			if(getAncho && ancho == 0 && !isNan(text)){
+				console.log("IM IN ANCHO");
+				ancho = text.match(/(?:\d*\.)?\d+/);
+				getAncho = false;
+				sendTextMessage(sender, "Precio del metro cuadrado de la persiana " + persiana + ": $" + precio + 
+					" . Segun las medidas que nos diste (" + alto + " cm. X " + ancho + " cm) Tu persiana costaria: $"+(precio*(alto*ancho)));
+				continue;
+			}
+
 			if(getAlto && alto == 0 && text.substr(0,text.indexOf(' ')) != "Necesitamos"){
 				console.log("IM IN ALTO");
-				alto = medidaToCm(text);
+				alto = text.match(/(?:\d*\.)?\d+/);
 				getAlto = false;
 
 				getAncho = true;
 				sendTextMessage(sender, "Excelente!, ahora ingresa el ancho ↔️ de tu ventana. En metros");			
+				continue;
 			}
+			
 
-			if(getAncho && ancho == 0 && text.substr(0,text.indexOf(' ')) != "Necesitamos"){
-				console.log("IM IN ANCHO");
-				ancho = medidaToCm(text);
-				getAncho = false;
-				sendTextMessage(sender, "Precio del metro cuadrado de la persiana " + persiana + ": $" + precio + 
-					" . Segun las medidas que nos diste (" + alto + " cm. X " + ancho + " cm) Tu persiana costaria: $"+(precio*(alto*ancho)));
-			}
 			//sendTextMessage(sender, "Text received, echo: "+text.substring(0, 200));
 		}
 		if (event.postback) {
@@ -179,20 +183,6 @@ function sendPersianas(sender) {
 		}
 	});
 };
-
-function medidaToCm(text) {
-	var medida = text.match(/(?:\d*\.)?\d+/);
-	console.log("MEDIDA " + medida)
-	console.log("MEDIDA TYPE " + typeof(medida))
-	// Si la medida dada son metros convertir a centimentros
-	if(!/[a-zA-Z]*c[a-zA-Z]*\w/g.test(text)){
-		// Convertir los metros a centimetros
-		medida = medida * 100;
-		console.log("MEDIDA CONVERTIDA" + medida)
-	}
-
-	return medida;
-}
 
 // spin spin sugar
 app.listen(app.get('port'), function() {
