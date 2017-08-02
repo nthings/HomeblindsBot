@@ -44,7 +44,8 @@ app.post('/webhook/', function (req, res) {
 			}
 
 			console.log(text);
-			if(getAlto && alto == 0){
+			if(getAlto && alto == 0 && text.substring(0, 7) !="Ingresa"){
+				console.log("IM IN ALTO");
 				alto = medidaToCm(text);
 				getAlto = false;
 
@@ -53,6 +54,7 @@ app.post('/webhook/', function (req, res) {
 			}
 
 			if(getAncho && ancho == 0){
+				console.log("IM IN ANCHO");
 				ancho = medidaToCm(text);
 				getAncho = false;
 				sendTextMessage(sender, "Precio del metro cuadrado de la persiana " + persiana + ": $" + precio + 
