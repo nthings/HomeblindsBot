@@ -43,7 +43,7 @@ app.post('/webhook/', function (req, res) {
 				continue;
 			}
 
-			if(getAlto && alto == 0 && !(text.contains("↔️") || text.contains("↕️"))){
+			if(getAlto && alto == 0 && !(text.match(/[↔️]+/) || text.match(/[↕️]+/))){
 				alto = medidaToCm(text);
 				getAlto = false;
 
@@ -51,7 +51,7 @@ app.post('/webhook/', function (req, res) {
 				sendTextMessage(sender, "Excelente!, ahora ingresa el ancho ↔️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");			
 			}
 
-			if(getAncho && ancho == 0 && !(text.contains("↔️") || text.contains("↕️"))){
+			if(getAncho && ancho == 0 && !(text.match(/[↔️]+/) || text.match(/[↕️]+/))){
 				ancho = medidaToCm(text);
 				getAncho = false;
 
