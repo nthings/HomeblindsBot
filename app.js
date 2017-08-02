@@ -44,7 +44,7 @@ app.post('/webhook/', function (req, res) {
 			}
 
 			console.log(text);
-			if(getAlto && alto == 0 && text.substring(0, 7) !="Ingresa"){
+			if(getAlto && alto == 0 && text.substring(0, 10) !="Necesitamos"){
 				console.log("IM IN ALTO");
 				alto = medidaToCm(text);
 				getAlto = false;
@@ -66,8 +66,7 @@ app.post('/webhook/', function (req, res) {
 			// let text = JSON.stringify(event.postback);
 			if(event.postback.title === "COTIZAR"){
 				persiana = event.postback.payload;
-				sendTextMessage(sender, "Necesitamos las medidas de tu ventana 📐.");
-				sendTextMessage(sender, "Ingresa el alto ↕️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
+				sendTextMessage(sender, "Necesitamos las medidas de tu ventana 📐. Ingresa el alto ↕️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
 				getAlto = true;
 			}
 			// sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token);
