@@ -92,7 +92,7 @@ function sendPersianas(sender) {
 					"buttons": [{
 						"type": "web_url",
 						"url": "https://www.messenger.com",
-						"title": "Ver Mas"
+						"title": "Ver"
 					}, {
 						"type": "postback",
 						"title": "Cotizar",
@@ -105,7 +105,7 @@ function sendPersianas(sender) {
 					"buttons": [{
 						"type": "web_url",
 						"url": "https://www.messenger.com",
-						"title": "Ver Mas"
+						"title": "Ver"
 					}, {
 						"type": "postback",
 						"title": "Cotizar",
@@ -118,7 +118,7 @@ function sendPersianas(sender) {
 					"buttons": [{
 						"type": "web_url",
 						"url": "https://www.messenger.com",
-						"title": "Ver Mas"
+						"title": "Ver"
 					}, {
 						"type": "postback",
 						"title": "Cotizar",
