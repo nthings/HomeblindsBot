@@ -37,15 +37,22 @@ app.post('/webhook/', function (req, res) {
 			let text = event.message.text;
 			if (text.toUpperCase().match(/(COT)|(PRE)+/g)){ 
 				console.log("MATCH");
-				sendPersianas(sender);
 				sendTextMessage(sender, "Claro!, aqui puedes ver nuestro catalogo de persianas. Elige la que mas te guste 😀");
+				sendPersianas(sender);
 				continue;
 			}
 			//sendTextMessage(sender, "Text received, echo: "+text.substring(0, 200));
 		}
 		if (event.postback) {
-			let text = JSON.stringify(event.postback);
-			sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token);
+			// let text = JSON.stringify(event.postback);
+			if(event.postback.title === "COTIZAR"){
+				sendMedidasMessage(sender, event.postback.payload)
+			}else if(event.postback.payload === "ALTO"){
+				sendTextMessage(sender, "Excelente!, ahora ingresa el alto ↕️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
+			}else if(event.postback.payload === "ANCHO"){
+				sendTextMessage(sender, "Excelente!, ahora ingresa el ancho ↔️ de tu ventana. No olvides indicarnos que unidad estas utilizando 🤔 (centimetros o metros)");
+			}
+			// sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token);
 			continue;
 		}
 	}
@@ -99,7 +106,7 @@ function sendPersianas(sender) {
 						"messenger_extensions": true
 					},
 					"buttons": [{
-						"title": "Cotizar",
+						"title": "COTIZAR",
 						"type": "postback",
 						"payload": "enrollable"
 					}],
@@ -116,7 +123,7 @@ function sendPersianas(sender) {
 					},
 					"buttons": [{
 						"type": "postback",
-						"title": "Cotizar",
+						"title": "COTIZAR",
 						"payload": "sheer"
 					}],
 				},{
@@ -132,7 +139,7 @@ function sendPersianas(sender) {
 					},
 					"buttons": [{
 						"type": "postback",
-						"title": "Cotizar",
+						"title": "COTIZAR",
 						"payload": "sheer"
 					}],
 				}]
@@ -156,8 +163,44 @@ function sendPersianas(sender) {
 	});
 };
 
-function sendMedidasMessage(sender) {
-	// body...
+function sendMedidasMessage(sender, persiana) {
+	//El cliente ya eligio la persiana que desea y hay que pedir las medidas para darle una cotizacion
+	let messageData = {
+		"attachment": {
+			"type":"template",
+			"payload":{
+				"template_type": "button",
+				"text": "Necesitamos las medidas de tu ventana 📐. Elige cual nos quieres dar primero 😀",
+				"buttons":[
+					{
+						"title": "ALTO ↕️",
+						"type": "postback",
+						"payload": "ALTO"
+					},
+					{
+						"title": "ANCHO ↔️",
+						"type": "postback",
+						"payload": "ANCHO"
+					},
+				]
+			}
+		}
+	};
+	request({
+		url: 'https://graph.facebook.com/v2.6/me/messages',
+		qs: {access_token:token},
+		method: 'POST',
+		json: {
+			recipient: {id:sender},
+			message: messageData,
+		}
+	}, function(error, response, body) {
+		if (error) {
+			console.log('Error sending messages: ', error);
+		} else if (response.body.error) {
+			console.log('Error: ', response.body.error);
+		}
+	});
 }
 
 // spin spin sugar
