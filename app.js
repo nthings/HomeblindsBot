@@ -181,7 +181,7 @@ function sendPersianas(sender) {
 };
 
 function medidaToCm(text) {
-	var medida = text.match(/^[0-9]{1,}([,.][0-9]{1,})?\w/);
+	var medida = text.match(/(?:\d*\.)?\d+/);
 	console.log("MEDIDA " + medida)
 	console.log("MEDIDA TYPE " + typeof(medida))
 	// Si la medida dada son metros convertir a centimentros
