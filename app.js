@@ -92,9 +92,9 @@ function sendPersianas(sender) {
 					"image_url": "http://www.persianastannah.com.mx/images/persianas-enrollables-en-monterrey-1.jpg",
 					"default_action":{
 						"type": "web_url",
-						"url": "https://www.messenger.com",
+						"url": "https://www.google.com",
 						"webview_height_ratio": "tall",
-						"fallback_url":"https://www.messenger.com"
+						"fallback_url":"https://www.google.com"
 					},
 					"buttons": [{
 						"title": "Cotizar",
@@ -109,9 +109,9 @@ function sendPersianas(sender) {
 					"image_url": "http://www.servipersianas.com.mx/sheerelegance04.jpg",
 					"default_action":{
 						"type": "web_url",
-						"url": "https://www.messenger.com",
+						"url": "https://www.google.com",
 						"webview_height_ratio": "tall",
-						"fallback_url":"https://www.messenger.com"
+						"fallback_url":"https://www.google.com"
 					},
 					"buttons": [{
 						"type": "postback",
@@ -126,9 +126,9 @@ function sendPersianas(sender) {
 					"image_url": "http://espacioflex.com/wp-content/uploads/2015/09/04-persiana-vertical.jpg",
 					"default_action":{
 						"type": "web_url",
-						"url": "https://www.messenger.com",
+						"url": "https://www.google.com",
 						"webview_height_ratio": "tall",
-						"fallback_url":"https://www.messenger.com"
+						"fallback_url":"https://www.google.com"
 					},
 					"buttons": [{
 						"type": "postback",
