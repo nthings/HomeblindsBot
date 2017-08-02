@@ -38,7 +38,7 @@ app.post('/webhook/', function (req, res) {
 			if (text.toUpperCase().match(/(COT)|(PRE)+/g)){ 
 				console.log("MATCH");
 				sendPersianas(sender);
-				sendTextMessage(sender, "Text received, echo: "+text.substring(0, 200));
+				sendTextMessage(sender, "Claro!, aqui puedes ver nuestro catalogo de persianas. Elige la que mas te guste 😀");
 				continue;
 			}
 			//sendTextMessage(sender, "Text received, echo: "+text.substring(0, 200));
@@ -155,6 +155,10 @@ function sendPersianas(sender) {
 		}
 	});
 };
+
+function sendMedidasMessage(sender) {
+	// body...
+}
 
 // spin spin sugar
 app.listen(app.get('port'), function() {
