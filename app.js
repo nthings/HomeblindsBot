@@ -221,7 +221,7 @@ function sendMedidasMessage(sender) {
 }
 
 function medidaToCm(text) {
-	medida = text.match(/^[0-9]{1,}([,.][0-9]{1,})?\w/g)
+	var medida = text.match(/^[0-9]{1,}([,.][0-9]{1,})?\w/g)
 	// Si la medida dada son metros convertir a centimentros
 	if(!/[a-zA-Z]*c[a-zA-Z]*\w/g.test(text)){
 		// Convertir los metros a centimetros
