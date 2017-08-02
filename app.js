@@ -1,71 +1,62 @@
-//This is still work in progress
-/*
-Please report any bugs to nicomwaks@gmail.com
-
-i have added console.log on line 48 
-
-
-
-
- */
 'use strict'
 
-const express = require('express')
-const bodyParser = require('body-parser')
-const request = require('request')
-const app = express()
+const express = require('express');
+const bodyParser = require('body-parser');
+const request = require('request');
+const app = express();
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 5000));
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({extended: false}));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // index
 app.get('/', function (req, res) {
-	res.send('hello world i am a secret bot')
+	res.send('hello world i am a secret bot');
 })
 
 // for facebook verification
 app.get('/webhook/', function (req, res) {
 	if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
-		res.send(req.query['hub.challenge'])
+		res.send(req.query['hub.challenge']);
 	} else {
-		res.send('Error, wrong token')
+		res.send('Error, wrong token');
 	}
 })
 
 // to post data
 app.post('/webhook/', function (req, res) {
-	let messaging_events = req.body.entry[0].messaging
+	let messaging_events = req.body.entry[0].messaging;
 	for (let i = 0; i < messaging_events.length; i++) {
-		let event = req.body.entry[0].messaging[i]
-		let sender = event.sender.id
+		let event = req.body.entry[0].messaging[i];
+		let sender = event.sender.id;
 		if (event.message && event.message.text) {
-			let text = event.message.text
-			if (text === 'Generic'){ 
-				console.log("welcome to chatbot")
-				sendGenericMessage(sender)
-				continue
+			let text = event.message.text;
+			if (text.toUpperCase().match(/(COT)|(PRE)+/g)){ 
+				sendPersianas(sender);
+				continue;
 			}
-			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+			//sendTextMessage(sender, "Text received, echo: "+text.substring(0, 200));
 		}
 		if (event.postback) {
-			let text = JSON.stringify(event.postback)
-			sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-			continue
+			let text = JSON.stringify(event.postback);
+			sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token);
+			continue;
 		}
 	}
-	res.sendStatus(200)
-})
+	res.sendStatus(200);
+});
 
 
 // recommended to inject access tokens as environmental variables, e.g.
 // const token = process.env.FB_PAGE_ACCESS_TOKEN
+// TOKEN FOR MAIN PAGE
 //const token = "EAACB3xHMg7cBAIcAH11IZBbuQvI3CgZCMEhqR4sGNqmGvWqMVbTQ9JfS4ss1pwCMIU3GNVLUzDNmbZCczd6qy0ZCAykLfwftdZBKu0fT5OdNMIGqv5ZBoHjZArMMigthadQbTMYZAmXKK5vUY4NRj79EDP3p5twqGNdzYv3m7uiw7wZDZD"
 
+//TOKEN FOR TEST PAGE
 const token = "EAACB3xHMg7cBABc2XfWiKBpqvwZCSDgdLHIjKlLFHYfzv9XcXumWJs0RnXn7pgMZA3WEXmEw04IrSuxg9UBn48Sr6fSCenAdZBRokmsRwSu1wd8ic508b0XJwR3hWZBlQuhWm6thxw5MXYi49gRaUjXag4K9LZARoSd2ylFrrGwZDZD"
 function sendTextMessage(sender, text) {
 	let messageData = { text:text }
@@ -85,40 +76,58 @@ function sendTextMessage(sender, text) {
 			console.log('Error: ', response.body.error)
 		}
 	})
-}
+};
 
-function sendGenericMessage(sender) {
+function sendPersianas(sender) {
 	let messageData = {
 		"attachment": {
 			"type": "template",
 			"payload": {
-				"template_type": "generic",
+				"template_type": "list",
+				"top_element_style": "compact",
 				"elements": [{
-					"title": "First card",
+					"title": "Persiana Enrollable",
 					"subtitle": "Element #1 of an hscroll",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+					"image_url": "http://www.persianastannah.com.mx/images/persianas-enrollables-en-monterrey-1.jpg",
 					"buttons": [{
 						"type": "web_url",
 						"url": "https://www.messenger.com",
-						"title": "web url"
+						"title": "Ver Mas"
 					}, {
 						"type": "postback",
-						"title": "Postback",
-						"payload": "Payload for first element in a generic bubble",
+						"title": "Cotizar",
+						"payload": "enrollable",
 					}],
 				}, {
-					"title": "Second card",
-					"subtitle": "Element #2 of an hscroll",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+					"title": "Persiana Sheer",
+					"subtitle": "Element #1 of an hscroll",
+					"image_url": "https://s-media-cache-ak0.pinimg.com/originals/5f/56/f2/5f56f20e628c2fbf65fe54ee06212028.jpg",
 					"buttons": [{
+						"type": "web_url",
+						"url": "https://www.messenger.com",
+						"title": "Ver Mas"
+					}, {
 						"type": "postback",
-						"title": "Postback",
-						"payload": "Payload for second element in a generic bubble",
+						"title": "Cotizar",
+						"payload": "sheer",
+					}],
+				},{
+					"title": "Persiana Vertical",
+					"subtitle": "Element #1 of an hscroll",
+					"image_url": "http://espacioflex.com/wp-content/uploads/2015/09/04-persiana-vertical.jpg",
+					"buttons": [{
+						"type": "web_url",
+						"url": "https://www.messenger.com",
+						"title": "Ver Mas"
+					}, {
+						"type": "postback",
+						"title": "Cotizar",
+						"payload": "vertical",
 					}],
 				}]
 			}
 		}
-	}
+	};
 	request({
 		url: 'https://graph.facebook.com/v2.6/me/messages',
 		qs: {access_token:token},
@@ -129,14 +138,14 @@ function sendGenericMessage(sender) {
 		}
 	}, function(error, response, body) {
 		if (error) {
-			console.log('Error sending messages: ', error)
+			console.log('Error sending messages: ', error);
 		} else if (response.body.error) {
-			console.log('Error: ', response.body.error)
+			console.log('Error: ', response.body.error);
 		}
-	})
-}
+	});
+};
 
 // spin spin sugar
 app.listen(app.get('port'), function() {
-	console.log('running on port', app.get('port'))
+	console.log('running on port', app.get('port'));
 })
