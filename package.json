@@ -1,16 +1,18 @@
 {
-  "name": "HomeblindsBot",
+  "name": "homeblindsbot",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.15.0",
-    "express": "^4.13.4",
-    "request": "^2.71.0"
+    "bootbot": "^1.0.16",
+    "dotenv": "^8.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
   }
 }
